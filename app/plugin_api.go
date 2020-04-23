@@ -592,6 +592,18 @@ func (api *PluginAPI) ReadFile(path string) ([]byte, *model.AppError) {
 	return api.app.ReadFile(path)
 }
 
+func (api *PluginAPI) FileExists(path string) (bool, *model.AppError) {
+	return api.app.FileExists(path)
+}
+
+func (api *PluginAPI) RemoveFile(path string) *model.AppError {
+	return api.app.RemoveFile(path)
+}
+
+func (api *PluginAPI) RemoveDirectory(path string) *model.AppError {
+	return api.app.RemoveDirectory(path)
+}
+
 func (api *PluginAPI) GetFile(fileId string) ([]byte, *model.AppError) {
 	return api.app.GetFile(fileId)
 }

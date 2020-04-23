@@ -136,6 +136,14 @@ func (a *App) ListDirectory(path string) ([]string, *model.AppError) {
 	return *paths, nil
 }
 
+func (a *App) RemoveDirectory(path string) *model.AppError {
+	backend, err := a.FileBackend()
+	if err != nil {
+		return err
+	}
+	return backend.RemoveDirectory(path)
+}
+
 func (a *App) getInfoForFilename(post *model.Post, teamId, channelId, userId, oldId, filename string) *model.FileInfo {
 	name, _ := url.QueryUnescape(filename)
 	pathPrefix := fmt.Sprintf("teams/%s/channels/%s/users/%s/%s/", teamId, channelId, userId, oldId)

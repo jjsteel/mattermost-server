@@ -3438,6 +3438,91 @@ func (s *apiRPCServer) ReadFile(args *Z_ReadFileArgs, returns *Z_ReadFileReturns
 	return nil
 }
 
+type Z_FileExistsArgs struct {
+	A string
+}
+
+type Z_FileExistsReturns struct {
+	A bool
+	B *model.AppError
+}
+
+func (g *apiRPCClient) FileExists(path string) (bool, *model.AppError) {
+	_args := &Z_FileExistsArgs{path}
+	_returns := &Z_FileExistsReturns{}
+	if err := g.client.Call("Plugin.FileExists", _args, _returns); err != nil {
+		log.Printf("RPC call to FileExists API failed: %s", err.Error())
+	}
+	return _returns.A, _returns.B
+}
+
+func (s *apiRPCServer) FileExists(args *Z_FileExistsArgs, returns *Z_FileExistsReturns) error {
+	if hook, ok := s.impl.(interface {
+		FileExists(path string) (bool, *model.AppError)
+	}); ok {
+		returns.A, returns.B = hook.FileExists(args.A)
+	} else {
+		return encodableError(fmt.Errorf("API FileExists called but not implemented."))
+	}
+	return nil
+}
+
+type Z_RemoveFileArgs struct {
+	A string
+}
+
+type Z_RemoveFileReturns struct {
+	A *model.AppError
+}
+
+func (g *apiRPCClient) RemoveFile(path string) *model.AppError {
+	_args := &Z_RemoveFileArgs{path}
+	_returns := &Z_RemoveFileReturns{}
+	if err := g.client.Call("Plugin.RemoveFile", _args, _returns); err != nil {
+		log.Printf("RPC call to RemoveFile API failed: %s", err.Error())
+	}
+	return _returns.A
+}
+
+func (s *apiRPCServer) RemoveFile(args *Z_RemoveFileArgs, returns *Z_RemoveFileReturns) error {
+	if hook, ok := s.impl.(interface {
+		RemoveFile(path string) *model.AppError
+	}); ok {
+		returns.A = hook.RemoveFile(args.A)
+	} else {
+		return encodableError(fmt.Errorf("API RemoveFile called but not implemented."))
+	}
+	return nil
+}
+
+type Z_RemoveDirectoryArgs struct {
+	A string
+}
+
+type Z_RemoveDirectoryReturns struct {
+	A *model.AppError
+}
+
+func (g *apiRPCClient) RemoveDirectory(path string) *model.AppError {
+	_args := &Z_RemoveDirectoryArgs{path}
+	_returns := &Z_RemoveDirectoryReturns{}
+	if err := g.client.Call("Plugin.RemoveDirectory", _args, _returns); err != nil {
+		log.Printf("RPC call to RemoveDirectory API failed: %s", err.Error())
+	}
+	return _returns.A
+}
+
+func (s *apiRPCServer) RemoveDirectory(args *Z_RemoveDirectoryArgs, returns *Z_RemoveDirectoryReturns) error {
+	if hook, ok := s.impl.(interface {
+		RemoveDirectory(path string) *model.AppError
+	}); ok {
+		returns.A = hook.RemoveDirectory(args.A)
+	} else {
+		return encodableError(fmt.Errorf("API RemoveDirectory called but not implemented."))
+	}
+	return nil
+}
+
 type Z_GetEmojiImageArgs struct {
 	A string
 }

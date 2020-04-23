@@ -683,6 +683,24 @@ type API interface {
 	// Minimum server version: 5.3
 	ReadFile(path string) ([]byte, *model.AppError)
 
+	// FileExists check file existence from the backend for a specific path
+	//
+	// @tag File
+	// Minimum server version: 5.23
+	FileExists(path string) (bool, *model.AppError)
+
+	// RemoveFile removes the file from the backend for a specific path
+	//
+	// @tag File
+	// Minimum server version: 5.23
+	RemoveFile(path string) *model.AppError
+
+	// RemoveDirectory removes path from the backend and sub-level files depending on depth
+	//
+	// @tag File
+	// Minimum server version: 5.23
+	RemoveDirectory(path string) *model.AppError
+
 	// GetEmojiImage returns the emoji image.
 	//
 	// @tag Emoji

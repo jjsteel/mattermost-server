@@ -741,6 +741,27 @@ func (api *apiTimerLayer) ReadFile(path string) ([]byte, *model.AppError) {
 	return _returnsA, _returnsB
 }
 
+func (api *apiTimerLayer) FileExists(path string) (bool, *model.AppError) {
+	startTime := timePkg.Now()
+	_returnsA, _returnsB := api.apiImpl.FileExists(path)
+	api.recordTime(startTime, "FileExists", true)
+	return _returnsA, _returnsB
+}
+
+func (api *apiTimerLayer) RemoveFile(path string) *model.AppError {
+	startTime := timePkg.Now()
+	_returnsA := api.apiImpl.RemoveFile(path)
+	api.recordTime(startTime, "RemoveFile", true)
+	return _returnsA
+}
+
+func (api *apiTimerLayer) RemoveDirectory(path string) *model.AppError {
+	startTime := timePkg.Now()
+	_returnsA := api.apiImpl.RemoveDirectory(path)
+	api.recordTime(startTime, "RemoveDirectory", true)
+	return _returnsA
+}
+
 func (api *apiTimerLayer) GetEmojiImage(emojiId string) ([]byte, string, *model.AppError) {
 	startTime := timePkg.Now()
 	_returnsA, _returnsB, _returnsC := api.apiImpl.GetEmojiImage(emojiId)
